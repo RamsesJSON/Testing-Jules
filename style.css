@@ -1,6 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lato:wght@300;400;700&display=swap');
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInAndUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html {
+    scroll-behavior: smooth; /* Added for smooth scrolling on anchor links */
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Lato', Arial, sans-serif;
     background-color: #121212;
     color: #e0e0e0;
     line-height: 1.6;
@@ -13,9 +36,17 @@ header {
     text-align: center;
 }
 
-h1 {
+header h1 { /* Targeted more specifically */
     margin: 0;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 700;
+    font-size: 2.8em; /* Explicit font size for header h1 */
+    opacity: 0; /* Initial state for animation */
+    animation-name: fadeInAndUp;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 0.5s;
 }
 
 nav {
@@ -23,6 +54,12 @@ nav {
     padding: 10px 0;
     text-align: center;
     border-bottom: 1px solid #ffd700;
+    opacity: 0; /* Initial state for animation */
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
 }
 
 nav ul {
@@ -39,36 +76,72 @@ nav ul li {
 nav ul li a {
     color: #e0e0e0;
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
+    font-family: 'Lato', Arial, sans-serif;
+    font-weight: 700; /* Lato bold */
+    transition: color 0.3s ease, transform 0.3s ease; /* Added transform to transition */
+    display: inline-block; /* Necessary for transform to work as expected */
 }
 
 nav ul li a:hover,
 nav ul li a:focus {
     color: #ffd700;
+    transform: translateY(-2px); /* Subtle lift effect */
 }
 
 main {
-    padding: 20px;
+    /* padding: 20px; /* Consider removing or adjusting if cards-container handles spacing */
 }
 
-section {
-    padding: 40px 20px;
-    margin-bottom: 20px;
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px 0; /* Vertical padding for the container */
+    opacity: 0; /* Initial state for animation */
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1.5s;
+}
+
+.meditation-card {
     background-color: #2a2a2a;
-    border-left: 5px solid #ffd700;
-    border-radius: 5px;
+    flex-basis: calc(33.333% - 40px); /* 3 cards per row, accounting for margin */
+    margin: 20px;
+    padding: 25px;
+    border: 1px solid #444;
+    border-top: 5px solid #ffd700; /* Gold accent on top */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* margin-bottom: 20px; /* Replaced by margin: 20px */
+    /* border-left: 5px solid #ffd700; /* Removed */
+    /* border-radius: 5px; /* Replaced by 8px */
 }
 
-section h2 {
+.meditation-card:hover {
+    transform: translateY(-5px) scale(1.02); /* Added scale and adjusted shadow */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.meditation-card h2 { /* Ensure specificity if needed, or use section h2 if class is on section */
     color: #ffd700;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Cinzel Decorative', serif;
+    font-weight: 700;
     margin-top: 0;
     margin-bottom: 15px;
+    font-size: 1.8em; /* Adjusted font size for cards */
 }
 
-section p, section ul {
-    line-height: 1.6; /* Or ensure body's line-height is inherited well */
+.meditation-card p, .meditation-card ul {
+    line-height: 1.6;
+}
+
+.meditation-card ul {
+    padding-left: 20px; /* Standard indentation for lists */
+    /* Or padding-left: 0; list-style-position: inside; if no indent desired */
 }
 
 footer {
@@ -79,12 +152,22 @@ footer {
     font-size: 0.9em;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 992px) { /* Tablet */
+    .meditation-card {
+        flex-basis: calc(50% - 40px); /* 2 cards per row */
+    }
+}
+
+@media (max-width: 600px) { /* Mobile */
     nav ul li {
         display: block;
         margin: 10px 0;
     }
-    section {
-        padding: 30px 15px; /* Adjust section padding for smaller screens */
+    /* section { */ /* Old rule, replaced by .meditation-card rules */
+        /* padding: 30px 15px; */ 
+    /* } */
+    .meditation-card {
+        flex-basis: calc(100% - 20px); /* Corrected for margin: 15px 10px (10px left/right) */
+        margin: 15px 10px; /* Reduced margin for smaller screens */
     }
 }
